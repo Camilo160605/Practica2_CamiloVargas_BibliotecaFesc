@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Biblioteca Digital Moisés SanJuán López - FESC. Portal accesible con servicios bibliográficos, catálogo y recursos digitales.">
+    <title>Biblioteca Digital FESC - Moisés SanJuán López</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        a:focus, button:focus, input:focus, textarea:focus, select:focus {
+            outline: 3px solid #c41e3a;
+            outline-offset: 2px;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #c41e3a;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        header {
+            /* background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%); */
+            background: linear-gradient(135deg, #c41e3a 0%, #a01828 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .logo {
+            width: 150px;
+            height: auto;
+        }
+        
+        .header-text {
+            flex: 1;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        header p {
+            color: #e0e0e0;
+        }
+        
+        nav {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+        
+        nav li {
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        nav li:last-child {
+            border-right: none;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 1rem 2rem;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #c41e3a;
+        }
+        
+        h2 {
+            color: #4a4a4a;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #c41e3a;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #c41e3a;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .intro-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            border: 3px solid #e0e0e0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        caption {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            text-align: left;
+            color: #4a4a4a;
+            border-left: 4px solid #c41e3a;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #fff5f5;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #4a4a4a;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #c41e3a;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #c41e3a 0%, #a01828 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .info-list {
+            list-style-position: inside;
+            margin-left: 1rem;
+        }
+        
+        .info-list li {
+            margin-bottom: 0.8rem;
+            color: #555;
+        }
+        
+        .info-list li strong {
+            color: #c41e3a;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+        }
+        
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                width: 120px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            nav li {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+            
+            nav li:last-child {
+                border-bottom: none;
+            }
+            
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    
+    <header>
+        <img src="Logofesc.png" alt="Logo de la Fundación de Estudios Superiores Comfanorte FESC" class="logo">
+        <div class="header-text">
+            <h1>Biblioteca Digital Moisés SanJuán López</h1>
+            <p>Fundación de Estudios Superiores Comfanorte - FESC</p>
+        </div>
+    </header>
+    
+    <nav role="navigation" aria-label="Navegación principal">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#horarios">Horarios</a></li>
+            <li><a href="#recursos">Recursos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+    
+    <main id="main-content">
+        <section id="inicio">
+            <h2>Bienvenidos a la Biblioteca FESC</h2>
+            
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800&h=400&fit=crop" 
+                 alt="Estudiantes trabajando en biblioteca moderna con computadoras y libros en ambiente colaborativo" 
+                 class="intro-image">
+            
+            <h3>Misión</h3>
+            <p>La biblioteca es un sistema técnico y de servicio que identifica, localiza, adquiere, recopila, clasifica, difunde y pone a disposición de la comunidad FESC, los recursos de información bibliográficos necesarios de las áreas del conocimiento en cualquier tipo de formato, para el desarrollo, mejoramiento y soporte de investigación y de extensión de la formación profesional y de la comunidad educativa en general.</p>
+            
+            <h3>Visión</h3>
+            <p>La Unidad de Información es versátil, inteligente y flexible a las necesidades de la comunidad FESC, la región Colombo-Venezolana y el país, la cual adopta tecnologías de vanguardia que permiten brindar información oportuna y de calidad, por medio de la colección disponible y de la cooperación e interconexión con fuentes del país y del mundo.</p>
+            
+            <h3>Objetivo</h3>
+            <p>La Biblioteca tiene por objeto identificar, obtener, transformar y difundir la información, para servir de apoyo a las actividades de investigación, docencia y extensión, realizadas en cumplimiento de su misión y proyección.</p>
+        </section>
+        
+        <section id="servicios">
+            <h2>Servicios de la Biblioteca</h2>
+            
+            <h3>Préstamos Disponibles</h3>
+            <ul class="info-list">
+                <li><strong>Préstamo en Sala:</strong> Consulta de material bibliográfico dentro de las instalaciones de la biblioteca</li>
+                <li><strong>Préstamo Externo:</strong> Permite llevar material a domicilio por 3 días hábiles con opción a 2 renovaciones</li>
+                <li><strong>Préstamo Interbibliotecario:</strong> Acceso a material de otras bibliotecas mediante convenios establecidos</li>
+            </ul>
+            
+            <h3>Recursos Digitales</h3>
+            <ul class="info-list">
+                <li>Acceso libre a bases de datos especializadas</li>
+                <li>Consulta de revistas científicas en línea</li>
+                <li>Capacitación en el uso de recursos bibliográficos</li>
+                <li>Conexión a redes de información mediante Internet</li>
+            </ul>
+        </section>
+        
+        <section id="horarios">
+            <h2>Horarios de Atención</h2>
+            
+            <table>
+                <caption>Horarios de servicio de la Biblioteca FESC</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Día</th>
+                        <th scope="col">Horario de Apertura</th>
+                        <th scope="col">Horario de Cierre</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Lunes</th>
+                        <td>7:00 AM</td>
+                        <td>9:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Martes</th>
+                        <td>7:00 AM</td>
+                        <td>9:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Miércoles</th>
+                        <td>7:00 AM</td>
+                        <td>9:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Jueves</th>
+                        <td>7:00 AM</td>
+                        <td>9:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Viernes</th>
+                        <td>7:00 AM</td>
+                        <td>9:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Sábado</th>
+                        <td>8:00 AM</td>
+                        <td>2:00 PM</td>
+                        <td>Abierto</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Domingo</th>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Cerrado</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><strong>Nota:</strong> La biblioteca permanecerá cerrada durante los días señalados como feriados a nivel nacional o por la FESC, y por causas de fuerza mayor.</p>
+        </section>
+        
+        <section id="recursos">
+            <h2>Recursos Digitales</h2>
+            
+            <h3>Bases de Datos Disponibles</h3>
+            <ul class="info-list">
+                <li><strong>eLibro:</strong> Plataforma con más de 100,000 títulos digitales en español</li>
+                <li><strong>Legiscomex:</strong> Base de datos especializada en comercio exterior y negocios internacionales</li>
+                <li><strong>Revistas Científicas:</strong> Acceso a publicaciones académicas y científicas actualizadas</li>
+            </ul>
+            
+            <h3>Enlaces Bibliográficos Recomendados</h3>
+            <ul class="info-list">
+                <li>Biblioteca Nacional de Colombia</li>
+                <li>Red de Bibliotecas del Banco de la República</li>
+                <li>Portal de Revistas Científicas Colombianas</li>
+                <li>Repositorios académicos universitarios</li>
+            </ul>
+        </section>
+        
+        <section id="contacto">
+            <h2>Formulario de Contacto</h2>
+            <p>Si tienes alguna pregunta, solicitud o sugerencia sobre nuestros servicios bibliotecarios, por favor completa el siguiente formulario y nos pondremos en contacto contigo a la brevedad.</p>
+            
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" required aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipo-usuario">Tipo de usuario:</label>
+                    <select id="tipo-usuario" name="tipo-usuario" required aria-required="true">
+                        <option value="">Seleccione una opción</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="docente">Docente</option>
+                        <option value="egresado">Egresado</option>
+                        <option value="administrativo">Personal administrativo</option>
+                        <option value="externo">Usuario externo</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" required aria-required="true"></textarea>
+                </div>
+                
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p><strong>Biblioteca Moisés SanJuán López</strong></p>
+        <p>Fundación de Estudios Superiores Comfanorte - FESC</p>
+        <p>Cúcuta, Norte de Santander, Colombia</p>
+        <p>Todos los derechos reservados - 2025</p>
+    </footer>
+</body>
+</html>
